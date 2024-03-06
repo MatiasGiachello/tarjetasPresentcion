@@ -35,7 +35,7 @@
 				<li>
 					<i class="fa-brands fa-whatsapp"></i>
 					<a
-						href="https://wa.me/541167497237?text=Hola,%20Este%20mensaje%20es%20para%20que%20se%20guarde%20mi%20contacto%20"
+						href="https://wa.me/541155774418?text=Hola,%20Este%20mensaje%20es%20para%20que%20se%20guarde%20mi%20contacto%20de%20Surfactan%20S.A%20Muchas%20Gracias!%20Gustavo%20Giachello%20"
 						target="_blank">1167497237</a
 					>
 				</li>
