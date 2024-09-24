@@ -1,7 +1,7 @@
 <script>
     let person = {
         name: "Arias, Maria Laura",
-        cargo: "Departamento de Compras",
+        cargo: "Gerente de Compras // Purchasing Manager",
         email: "mlarias@surfactan.com.ar",
         phone: "1140286784",
         interno: "109",
