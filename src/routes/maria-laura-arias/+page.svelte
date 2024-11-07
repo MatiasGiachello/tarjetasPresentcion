@@ -62,7 +62,7 @@
             </div>
         </div>
         <div id="image-container">
-            <img src="maria-laura.jpg" alt="Foto de la persona" />
+            <img src="maria-laura.jpeg" alt="Foto de la persona" />
         </div>
     </div>
 </main>
