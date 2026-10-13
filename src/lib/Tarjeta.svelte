@@ -3,13 +3,36 @@
 
 	/** @type {{slug:string,nombre:string,apellido:string,cargo:string,email:string,celular?:string,interno?:string,foto?:string}} */
 	export let p;
+	/** 'es' o 'en' */
+	export let lang = 'es';
+
+	const textos = {
+		es: {
+			whatsapp: 'WhatsApp', llamar: 'Llamar', email: 'Email', web: 'Web', guardar: 'Guardar contacto',
+			celular: 'Celular', telEmpresa: 'Teléfono empresa', interno: 'Interno', direccion: 'Dirección',
+			horarioT: 'Horario', horario: 'Lunes a viernes de 09:00 a 17:00', desde: 'Experiencia desde 1964',
+			en: ' en ', saludo: (n) => `Hola ${n}, te escribo desde tu tarjeta de Surfactan S.A.`,
+			otro: 'English version', otroHref: (slug) => `/en/${slug}`
+		},
+		en: {
+			whatsapp: 'WhatsApp', llamar: 'Call', email: 'Email', web: 'Website', guardar: 'Save contact',
+			celular: 'Mobile', telEmpresa: 'Office phone', interno: 'Ext.', direccion: 'Address',
+			horarioT: 'Business hours', horario: 'Monday to Friday, 9:00 a.m. to 5:00 p.m. (GMT-3)',
+			desde: 'Experience since 1964', en: ' at ',
+			saludo: (n) => `Hi ${n}, I'm reaching out from your Surfactan S.A. business card.`,
+			otro: 'Versión en español', otroHref: (slug) => `/${slug}`
+		}
+	};
+	$: t = textos[lang] || textos.es;
+	$: cargo = lang === 'en' && p.cargoEn ? p.cargoEn : p.cargo;
+	$: direccion = lang === 'en' ? `${empresa.direccion}, Argentina` : empresa.direccion;
 
 	$: nombreCompleto = `${p.nombre} ${p.apellido}`.trim();
 	$: iniciales = (p.nombre[0] + (p.apellido ? p.apellido[0] : '')).toUpperCase();
 	$: cel = p.celular ? `+549${p.celular}` : '';
 	$: celTexto = p.celular ? `11 ${p.celular.slice(2, 6)}-${p.celular.slice(6)}` : '';
 	$: whatsapp = p.celular
-		? `https://wa.me/549${p.celular}?text=${encodeURIComponent(`Hola ${p.nombre}, te escribo desde tu tarjeta de Surfactan S.A.`)}`
+		? `https://wa.me/549${p.celular}?text=${encodeURIComponent(t.saludo(p.nombre))}`
 		: '';
 
 	let fotoOk = true;
@@ -21,7 +44,7 @@
 			`N:${p.apellido};${p.nombre};;;`,
 			`FN:${nombreCompleto}`,
 			`ORG:${empresa.nombre}`,
-			`TITLE:${p.cargo}`,
+			`TITLE:${cargo}`,
 			`EMAIL;TYPE=WORK:${p.email}`,
 			cel ? `TEL;TYPE=CELL:${cel}` : '',
 			`TEL;TYPE=WORK,VOICE:${empresa.telefono}${p.interno ? ' int. ' + p.interno : ''}`,
@@ -41,10 +64,10 @@
 
 <svelte:head>
 	<title>{nombreCompleto} · {empresa.nombre}</title>
-	<meta name="description" content="{nombreCompleto}, {p.cargo} en {empresa.nombre}" />
+	<meta name="description" content="{nombreCompleto}, {cargo}{t.en}{empresa.nombre}" />
 </svelte:head>
 
-<main class="card">
+<main class="card" lang={lang}>
 	<header class="top">
 		<img class="logo" src="/logo.png" alt="Surfactan" width="130" height="70" />
 	</header>
@@ -60,7 +83,7 @@
 
 	<section class="who">
 		<h1>{nombreCompleto}</h1>
-		<p>{p.cargo}</p>
+		<p>{cargo}</p>
 		<span>{empresa.nombre}</span>
 	</section>
 
@@ -68,45 +91,45 @@
 		{#if p.celular}
 			<a class="act wa" href={whatsapp} target="_blank" rel="noopener">
 				<svg viewBox="0 0 24 24"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21" /><path d="M9.5 8.5c0 3 2.5 6 6 6l1-1.5-2-1-1 .8c-1-.5-1.8-1.3-2.3-2.3l.8-1-1-2z" /></svg>
-				WhatsApp
+				{t.whatsapp}
 			</a>
 			<a class="act" href="tel:{cel}">
 				<svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z" /></svg>
-				Llamar
+				{t.llamar}
 			</a>
 		{:else}
 			<a class="act" href="tel:{empresa.telefono}">
 				<svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z" /></svg>
-				Llamar
+				{t.llamar}
 			</a>
 		{/if}
 		<a class="act" href="mailto:{p.email}">
 			<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg>
-			Email
+			{t.email}
 		</a>
 		<a class="act" href={empresa.web} target="_blank" rel="noopener">
 			<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20" /></svg>
-			Web
+			{t.web}
 		</a>
 	</nav>
 
 	<button class="save" on:click={guardarContacto}>
 		<svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M19 8v6M22 11h-6" /></svg>
-		Guardar contacto
+		{t.guardar}
 	</button>
 
 	<ul class="list">
 		<li>
 			<a href="mailto:{p.email}">
 				<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg>
-				<div><b>Email</b><span>{p.email}</span></div>
+				<div><b>{t.email}</b><span>{p.email}</span></div>
 			</a>
 		</li>
 		{#if p.celular}
 			<li>
 				<a href="tel:{cel}">
 					<svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2" /><path d="M11 18h2" /></svg>
-					<div><b>Celular</b><span>{celTexto}</span></div>
+					<div><b>{t.celular}</b><span>{celTexto}</span></div>
 				</a>
 			</li>
 		{/if}
@@ -114,26 +137,27 @@
 			<a href="tel:{empresa.telefono}">
 				<svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z" /></svg>
 				<div>
-					<b>Teléfono empresa</b><span>{empresa.telefonoTexto}{p.interno ? ` · Interno ${p.interno}` : ''}</span>
+					<b>{t.telEmpresa}</b><span>{empresa.telefonoTexto}{p.interno ? ` · ${t.interno} ${p.interno}` : ''}</span>
 				</div>
 			</a>
 		</li>
 		<li>
 			<a href={empresa.mapa} target="_blank" rel="noopener">
 				<svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
-				<div><b>Dirección</b><span>{empresa.direccion}</span></div>
+				<div><b>{t.direccion}</b><span>{direccion}</span></div>
 			</a>
 		</li>
 		<li>
 			<div class="row">
 				<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></svg>
-				<div><b>Horario</b><span>{empresa.horario}</span></div>
+				<div><b>{t.horarioT}</b><span>{t.horario}</span></div>
 			</div>
 		</li>
 	</ul>
 
 	<footer>
-		Experiencia desde 1964 · <a href={empresa.web} target="_blank" rel="noopener">{empresa.webTexto}</a>
+		{t.desde} · <a href={empresa.web} target="_blank" rel="noopener">{empresa.webTexto}</a>
+		<a class="lang" href={t.otroHref(p.slug)}>{t.otro}</a>
 	</footer>
 </main>
 
@@ -309,6 +333,12 @@
 		padding: 18px 20px 24px;
 		border-top: 1px solid var(--line);
 		margin-top: 4px;
+	}
+	.lang {
+		display: block;
+		margin-top: 10px;
+		font-weight: 500 !important;
+		font-size: 13px;
 	}
 	footer a {
 		color: var(--blue);

@@ -7,6 +7,7 @@
 //             Si se deja vacío, se muestran las iniciales.
 //  celular  → solo números, sin 0 ni 15 (ej: 1140286735). Se usa para WhatsApp y llamar.
 //  interno  → interno del conmutador (opcional).
+//  cargoEn  → cargo en inglés para la versión /en/<slug> (si falta, se usa el de español).
 // ─────────────────────────────────────────────────────────────
 
 export const empresa = {
@@ -20,7 +21,7 @@ export const empresa = {
 	horario: 'Lunes a viernes de 09:00 a 17:00'
 };
 
-/** @type {Array<{slug:string,nombre:string,apellido:string,cargo:string,email:string,celular?:string,interno?:string,foto?:string}>} */
+/** @type {Array<{slug:string,nombre:string,apellido:string,cargo:string,cargoEn?:string,email:string,celular?:string,interno?:string,foto?:string}>} */
 export const personas = [
 	{
 		slug: 'matias-giachello',
@@ -54,11 +55,11 @@ export const personas = [
 		slug: 'daniel-rodriguez',
 		nombre: 'Daniel',
 		apellido: 'Rodríguez',
-		cargo: 'Gerente General',
+		cargo: 'Gerente de Producción',
+		cargoEn: 'Production Manager',
 		email: 'drodriguez@surfactan.com.ar',
 		celular: '1140286735',
-		interno: '205',
-		foto: 'daniel-rodriguez.jpg'
+		interno: '205'
 	},
 	{
 		slug: 'david',
