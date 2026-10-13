@@ -1,7 +1,7 @@
 <script>
 	import { empresa } from '$lib/personas.js';
 
-	/** @type {{slug:string,nombre:string,apellido:string,cargo:string,email:string,celular?:string,interno?:string,foto?:string}} */
+	/** @type {{slug:string,titulo?:string,nombre:string,apellido:string,cargo:string,email:string,celular?:string,interno?:string,foto?:string}} */
 	export let p;
 	/** 'es' o 'en' */
 	export let lang = 'es';
@@ -28,6 +28,7 @@
 	$: direccion = lang === 'en' ? `${empresa.direccion}, Argentina` : empresa.direccion;
 
 	$: nombreCompleto = `${p.nombre} ${p.apellido}`.trim();
+	$: nombreVisible = (lang === 'es' && p.titulo ? `${p.titulo} ` : '') + nombreCompleto;
 	$: iniciales = (p.nombre[0] + (p.apellido ? p.apellido[0] : '')).toUpperCase();
 	$: cel = p.celular ? `+549${p.celular}` : '';
 	$: celTexto = p.celular ? `11 ${p.celular.slice(2, 6)}-${p.celular.slice(6)}` : '';
@@ -41,7 +42,7 @@
 		const lineas = [
 			'BEGIN:VCARD',
 			'VERSION:3.0',
-			`N:${p.apellido};${p.nombre};;;`,
+			`N:${p.apellido};${p.nombre};;${p.titulo || ""};`,
 			`FN:${nombreCompleto}`,
 			`ORG:${empresa.nombre}`,
 			`TITLE:${cargo}`,
@@ -82,7 +83,7 @@
 	</div>
 
 	<section class="who">
-		<h1>{nombreCompleto}</h1>
+		<h1>{nombreVisible}</h1>
 		<p>{cargo}</p>
 		<span>{empresa.nombre}</span>
 	</section>
