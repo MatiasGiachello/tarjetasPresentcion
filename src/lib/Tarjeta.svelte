@@ -28,7 +28,7 @@
 	$: direccion = lang === 'en' ? `${empresa.direccion}, Argentina` : empresa.direccion;
 
 	$: nombreCompleto = `${p.nombre} ${p.apellido}`.trim();
-	$: nombreVisible = (lang === 'es' && p.titulo ? `${p.titulo} ` : '') + nombreCompleto;
+	$: nombreVisible = (p.titulo ? `${p.titulo} ` : '') + nombreCompleto;
 	$: iniciales = (p.nombre[0] + (p.apellido ? p.apellido[0] : '')).toUpperCase();
 	$: cel = p.celular ? `+549${p.celular}` : '';
 	$: celTexto = p.celular ? `11 ${p.celular.slice(2, 6)}-${p.celular.slice(6)}` : '';

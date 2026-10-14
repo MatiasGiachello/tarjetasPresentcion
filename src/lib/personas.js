@@ -7,7 +7,7 @@
 //             Si se deja vacío, se muestran las iniciales.
 //  celular  → solo números, sin 0 ni 15 (ej: 1140286735). Se usa para WhatsApp y llamar.
 //  interno  → interno del conmutador (opcional).
-//  titulo   → título antes del nombre (opcional, ej: 'Lic.', 'Ing.'). Solo se muestra en español.
+//  titulo   → título antes del nombre (opcional, ej: 'Lic.', 'Ing.'). Se muestra en español y en inglés.
 //  cargoEn  → cargo en inglés para la versión /en/<slug> (si falta, se usa el de español).
 // ─────────────────────────────────────────────────────────────
 

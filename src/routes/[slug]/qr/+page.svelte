@@ -21,7 +21,7 @@
 		} catch {}
 	}
 
-	$: nombre = `${lang === 'es' && p.titulo ? p.titulo + ' ' : ''}${p.nombre} ${p.apellido}`.trim();
+	$: nombre = `${p.titulo ? p.titulo + ' ' : ''}${p.nombre} ${p.apellido}`.trim();
 	$: cargo = lang === 'en' && p.cargoEn ? p.cargoEn : p.cargo;
 	$: corto = `QR ${p.nombre.split(' ')[0]}`;
 </script>
