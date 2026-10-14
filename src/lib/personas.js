@@ -103,6 +103,16 @@ export const personas = [
 		foto: 'gustavo-giachello.jpg'
 	},
 	{
+		slug: 'jorge-chiavellini',
+		titulo: 'Lic.',
+		nombre: 'Jorge G.',
+		apellido: 'Chiavellini',
+		cargo: 'Biotecnología Industrial Aplicada',
+		cargoEn: 'Applied Industrial Biotechnology',
+		email: 'jchiavellini@surfactan.com.ar',
+		celular: '1151171659'
+	},
+	{
 		slug: 'juan-sanchez',
 		nombre: 'Juan Francisco',
 		apellido: 'Sánchez',
