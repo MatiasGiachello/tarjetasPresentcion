@@ -148,8 +148,7 @@ export const personas = [
 		cargoEn: 'Purchasing Manager',
 		email: 'mlarias@surfactan.com.ar',
 		celular: '1140286784',
-		interno: '109',
-		foto: 'maria-laura-gallo.jpg'
+		interno: '109'
 	},
 	{
 		slug: 'rodolfo-fayo',
