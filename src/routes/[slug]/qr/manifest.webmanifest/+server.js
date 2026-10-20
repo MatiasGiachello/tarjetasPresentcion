@@ -1,9 +1,9 @@
-import { personas, buscar } from '$lib/personas.js';
+import { todosLosSlugs, buscar } from '$lib/personas.js';
 
 export const prerender = true;
 
 export function entries() {
-	return personas.map((p) => ({ slug: p.slug }));
+	return todosLosSlugs();
 }
 
 /** Manifiesto para "Agregar a pantalla de inicio": el ícono abre directo el QR de esa persona. */

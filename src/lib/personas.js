@@ -8,6 +8,7 @@
 //  celular  → solo números, sin 0 ni 15 (ej: 1140286735). Se usa para WhatsApp y llamar.
 //  interno  → interno del conmutador (opcional).
 //  titulo   → título antes del nombre (opcional, ej: 'Lic.', 'Ing.'). Se muestra en español y en inglés.
+//  alias    → direcciones anteriores que deben seguir funcionando (opcional).
 //  cargoEn  → cargo en inglés para la versión /en/<slug> (si falta, se usa el de español).
 // ─────────────────────────────────────────────────────────────
 
@@ -139,14 +140,16 @@ export const personas = [
 		interno: '123'
 	},
 	{
-		slug: 'maria-laura-arias',
+		slug: 'maria-laura-gallo',
+		alias: ['maria-laura-arias'], // dirección anterior: los QR viejos siguen funcionando
 		nombre: 'María Laura',
-		apellido: 'Arias',
-		cargo: 'Gerente de Compras · Purchasing Manager',
+		apellido: 'Gallo',
+		cargo: 'Gerenta de Compras',
+		cargoEn: 'Purchasing Manager',
 		email: 'mlarias@surfactan.com.ar',
 		celular: '1140286784',
 		interno: '109',
-		foto: 'maria-laura-arias.jpg'
+		foto: 'maria-laura-gallo.jpg'
 	},
 	{
 		slug: 'rodolfo-fayo',
@@ -178,4 +181,9 @@ export const personas = [
 	}
 ];
 
-export const buscar = (slug) => personas.find((p) => p.slug === slug);
+export const buscar = (slug) =>
+	personas.find((p) => p.slug === slug || (p.alias || []).includes(slug));
+
+/** Todas las direcciones a generar, incluidas las anteriores (alias). */
+export const todosLosSlugs = () =>
+	personas.flatMap((p) => [p.slug, ...(p.alias || [])]).map((slug) => ({ slug }));
